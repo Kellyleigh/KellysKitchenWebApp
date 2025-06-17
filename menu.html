@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./images/Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href='https://fonts.googleapis.com/css?family=Italianno' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Italiana' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelly's Kitchen | Menu</title>
+</head>
+
+<body>
+    <header>
+        <div class="header">
+
+            <div class="headerbar">
+                <div class="nav">
+                    <ul>
+                        <a href="index.html">
+                            <li>HOME</li>
+                        </a>
+                        <a href="menu.html">
+                            <li>MENU</li>
+                        </a>
+                        <a href="book.html">
+                            <li>BOOK NOW</li>
+                        </a>
+                        <a href="about.html">
+                            <li>ABOUT US</li>
+                        </a>
+                        <a href="contact.html">
+                            <li>CONTACT US</li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+            <h1 style="color: black; font-family:'Italianno'; font-size: 40px;">Kelly's Kitchen</h1>
+            <div class="bar">
+                <i class="fa-solid fa-bars"></i>
+                <i class="fa-solid fa-xmark" id="hdcross"></i>
+            </div>
+            <div class="nav">
+                <ul>
+                    <a href="index.html">
+                        <li>HOME</li>
+                    </a>
+                    <a href="menu.html">
+                        <li>MENU</li>
+                    </a>
+                    <a href="book.html">
+                        <li>BOOK NOW</li>
+                    </a>
+                    <a href="about.html">
+                        <li>ABOUT US</li>
+                    </a>
+                    <a href="contact.html">
+                        <li>CONTACT US</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="home">
+        <div class="main_slide">
+            <div class="section-heading">
+                <h1>Our menu</h1>
+            </div>
+            <div class="heading-description">
+                <p>Each item of food on our menu has been carefully curated to satisfy your taste buds and allow you to
+                    have the most enjoyable experience possible.</p>
+            </div>
+
+            <!-- Filter Options -->
+            <div class="filter-container">
+                <div class="filter-options">
+                    <h3>Filter by:</h3>
+                    <select id="filter-select">
+                        <option value="all">All Items</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="gluten-free">Gluten-Free</option>
+                        <option value="sweet">Sweet</option>
+                        <option value="savoury">Savoury</option>
+                        <option value="budget">Budget-Friendly (Under R100)</option>
+                    </select>
+                </div>
+                <div class="sort-options">
+                    <h3>Sort by:</h3>
+                    <select id="sort-select">
+                        <option value="default">Default</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Breakfast Menu Section -->
+            <div class="section-heading">
+                <h1>Breakfast</h1>
+            </div>
+            <div class="menu-grid-container">
+                <div class="menu-item">
+                    <img src="images/eggsben.png" alt="Breakfast Item 1">
+                    <h3>Eggs Benedict</h3>
+                    <p>Poached eggs on English muffin with cherry tomatoes and hollandaise sauce</p>
+                    <span class="price">R85</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/frenchtoast.png" alt="Breakfast Item 2">
+                    <h3>French Toast</h3>
+                    <p>French toast with fresh berries</p>
+                    <span class="price">R75</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/fullenglishbreak.png" alt="Breakfast Item 4">
+                    <h3>Full English</h3>
+                    <p>Eggs, bacon, sausage, beans, toast and grilled tomato</p>
+                    <span class="price">R95</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/pancakes.png" alt="Breakfast Item 3">
+                    <h3>Pancake Stack</h3>
+                    <p>Fluffy pancakes with maple syrup and fresh berries</p>
+                    <span class="price">R65</span>
+                </div>
+            </div>
+
+            <!-- Main Menu Section -->
+            <div class="section-heading">
+                <h1>Main</h1>
+            </div>
+            <div class="menu-grid-container">
+                <div class="menu-item">
+                    <img src="images/steak.png" alt="Main Item 1">
+                    <h3>Ribeye Steak</h3>
+                    <p>Grilled ribeye steak with herb butter, roasted vegetables and mashed potatoes</p>
+                    <span class="price">R185</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/beefburger.png" alt="Main Item 2">
+                    <h3>Gourmet Burger</h3>
+                    <p>Beef patty with cheese, caramelized onions, lettuce and tomato on a brioche bun</p>
+                    <span class="price">R120</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/pasta.png" alt="Main Item 3">
+                    <h3>Creamy Pasta</h3>
+                    <p>Fettuccine with mushroom cream sauce, parmesan and fresh herbs</p>
+                    <span class="price">R95</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/salmon.png" alt="Main Item 4">
+                    <h3>Grilled Salmon</h3>
+                    <p>Fresh salmon fillet with lemon butter sauce and seasonal vegetables</p>
+                    <span class="price">R165</span>
+                </div>
+            </div>
+
+            <!-- Dessert Menu Section -->
+            <div class="section-heading">
+                <h1>Dessert</h1>
+            </div>
+            <div class="menu-grid-container">
+                <div class="menu-item">
+                    <img src="images/cheesecake.png" alt="Dessert Item 1">
+                    <h3>New York Cheesecake</h3>
+                    <p>Creamy cheesecake with berry compote and whipped cream</p>
+                    <span class="price">R65</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/fondant.png" alt="Dessert Item 2">
+                    <h3>Chocolate Fondant</h3>
+                    <p>Warm chocolate cake with molten center and vanilla ice cream</p>
+                    <span class="price">R75</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/tiramisu.png" alt="Dessert Item 3">
+                    <h3>Tiramisu</h3>
+                    <p>Classic Italian dessert with coffee-soaked ladyfingers and mascarpone</p>
+                    <span class="price">R60</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/sundae.png" alt="Dessert Item 4">
+                    <h3>Ice Cream Sundae</h3>
+                    <p>Three scoops of ice cream with chocolate sauce, nuts and cherries</p>
+                    <span class="price">R55</span>
+                </div>
+            </div>
+
+            <!-- Kids Menu Section -->
+            <div class="section-heading">
+                <h1>Kids</h1>
+            </div>
+            <div class="menu-grid-container">
+                <div class="menu-item">
+                    <img src="images/chickennuggs.png" alt="Kids Item 1">
+                    <h3>Chicken Nuggets</h3>
+                    <p>Crispy chicken nuggets with fries and ketchup</p>
+                    <span class="price">R45</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/macncheese.png" alt="Kids Item 2">
+                    <h3>Mac & Cheese</h3>
+                    <p>Creamy macaroni and cheese with garlic bread</p>
+                    <span class="price">R40</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/minipizza.png" alt="Kids Item 3">
+                    <h3>Mini Pizza</h3>
+                    <p>Small cheese and tomato pizza with choice of toppings</p>
+                    <span class="price">R50</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/fishfingers.png" alt="Kids Item 4">
+                    <h3>Fish Fingers</h3>
+                    <p>Breaded fish fingers with mashed potatoes and peas</p>
+                    <span class="price">R45</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="content">
+            <div class="left box">
+                <div class="upper">
+                    <div class="topic">Location</div>
+                    <p>Address: Corner Monument and, Blaauwklippen Ave,<br>Glen mairais, Kempton Park, 1619</p>
+                    <p>Phone: 010-1234567</p>
+                </div>
+                <div class="lower">
+                    <div class="topic">Contact us</div>
+                    <div class="Phone">
+                        <a href="#"><i class="fas fa-phone-volume"></i>010-1234567</a>
+                    </div>
+                    <div class="email">
+                        <a href="#"><i class="fas fa-envelope"></i>enquiries@kellyskitchen.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="middle box">
+                <div class="topic">Trading Hours</div>
+                <div><a href="#">Monday - Thursday: 8am - 9pm</a></div>
+                <div><a href="#">Friday - Saturday: 8am - 10pm</a></div>
+                <div><a href="#">Sunday: 8am - 9pm</a></div>
+                <div><a href="#">Public Holidays: 8am - 9pm</a></div>
+            </div>
+            <div class="right box">
+                <div class="topic">Subscribe to us</div>
+                <form action="#">
+                    <input type="text" placeholder="Enter email address">
+                    <input type="submit" name="" value="Send">
+                    <div class="media-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61576896249899"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://www.instagram.com/_kellys_kitchen_/embed"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="bottom">
+            <p>&copy; 2025 Kelly's Kitchen. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

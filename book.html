@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./images/Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href='https://fonts.googleapis.com/css?family=Italianno' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Italiana' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelly's Kitchen | Book a Table</title>
+    <style>
+        .availability-status {
+            margin: 10px 0;
+            font-weight: bold;
+            min-height: 24px;
+        }
+        .checking {
+            color: #666;
+        }
+        .available {
+            color: #28a745;
+        }
+        .unavailable {
+            color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header">
+
+            <div class="headerbar">
+                <div class="nav">
+                    <ul>
+                        <a href="index.html">
+                            <li>HOME</li>
+                        </a>
+                        <a href="menu.html">
+                            <li>MENU</li>
+                        </a>
+                        <a href="book.html">
+                            <li>BOOK NOW</li>
+                        </a>
+                        <a href="about.html">
+                            <li>ABOUT US</li>
+                        </a>
+                        <a href="contact.html">
+                            <li>CONTACT US</li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+            <h1 style="color: black; font-family:'Italianno'; font-size: 40px;">Kelly's Kitchen</h1>
+            <div class="bar">
+                <i class="fa-solid fa-bars"></i>
+                <i class="fa-solid fa-xmark" id="hdcross"></i>
+            </div>
+            <div class="nav">
+                <ul>
+                    <a href="index.html">
+                        <li>HOME</li>
+                    </a>
+                    <a href="menu.html">
+                        <li>MENU</li>
+                    </a>
+                    <a href="book.html">
+                        <li>BOOK NOW</li>
+                    </a>
+                    <a href="about.html">
+                        <li>ABOUT US</li>
+                    </a>
+                    <a href="contact.html">
+                        <li>CONTACT US</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="home">
+        <div class="main_slide">
+            <div class="section-heading">
+                <h1>Book a table</h1>
+            </div>
+            <div class="heading-description">
+                <p>Reserve your table at Kelly's Kitchen</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="booking-form">
+        <form id="booking-form">
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+            <input type="date" id="date" name="date" required>
+            <input type="time" id="time" name="time" required>
+            <input type="number" id="party_size" name="party_size" placeholder="Number of Guests" min="1" required>
+            <div id="availability-status" class="availability-status"></div>
+            <select id="seating_preference" name="seating_preference" required>
+                <option value="" disabled selected>Select Seating Preference</option>
+                <option value="inside">Inside</option>
+                <option value="outside">Outside</option>
+                <option value="kids_play_area">Kids Play Area</option>
+            </select>
+            <button type="submit">Book now</button>
+        </form>
+        <div id="booking-response"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="content">
+            <div class="left box">
+                <div class="upper">
+                    <div class="topic">Location</div>
+                    <p>Address: Corner Monument and, Blaauwklippen Ave,<br>Glen mairais, Kempton Park, 1619</p>
+                    <p>Phone: 010-1234567</p>
+                </div>
+                <div class="lower">
+                    <div class="topic">Contact us</div>
+                    <div class="Phone">
+                        <a href="#"><i class="fas fa-phone-volume"></i>010-1234567</a>
+                    </div>
+                    <div class="email">
+                        <a href="#"><i class="fas fa-envelope"></i>enquiries@kellyskitchen.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="middle box">
+                <div class="topic">Trading Hours</div>
+                <div><a href="#">Monday - Thursday: 8am - 9pm</a></div>
+                <div><a href="#">Friday - Saturday: 8am - 10pm</a></div>
+                <div><a href="#">Sunday: 8am - 9pm</a></div>
+                <div><a href="#">Public Holidays: 8am - 9pm</a></div>
+            </div>
+            <div class="right box">
+                <div class="topic">Subscribe to us</div>
+                <form id="newsletter-form">
+                    <input type="text" placeholder="Enter email address" required>
+                    <input type="submit" value="Subscribe">
+                    <div class="media-icons">
+                        <a href="https://www.facebook.com/profile.php?id=61576896249899"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://www.instagram.com/_kellys_kitchen_/embed"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="bottom">
+            <p>&copy; 2025 Kelly's Kitchen. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script src="booking.js"></script>
+    <script src="newsletter.js"></script>
+</body>
+
+</html>
