@@ -1,2 +1,7 @@
 node_modules/
 .env
+
+DB_HOST=your-sql-server.database.windows.net
+DB_USER=your-username
+DB_PASSWORD=your-password
+DB_NAME=kellys_kitchen
