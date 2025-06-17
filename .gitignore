@@ -1,7 +1,2 @@
 node_modules/
-.env
 
-DB_HOST=https://gentle-bay-0e08bd410.6.azurestaticapps.net
-DB_USER=kelly.fourie1@gmail.com
-DB_PASSWORD=Kellyfourie1612!
-DB_NAME=kellys_kitchen
