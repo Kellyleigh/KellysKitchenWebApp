@@ -1,9 +1,9 @@
 -- Kelly's Kitchen Restaurant Database Schema (SQL Server Version)
 
 -- Create the database
-CREATE DATABASE KellysKitchenDatabase;
+CREATE DATABASE KellysDatabase;
 GO
-USE KellysKitchenDatabase;
+USE KellysDatabase;
 GO
 
 -- Menu Categories Table

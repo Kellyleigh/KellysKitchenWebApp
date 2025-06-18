@@ -1,9 +1,43 @@
+
 {
-  "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
-  "configurations": {
-    "kelly's-kitchen-web-app": {
-      "appLocation": ".",
-      "outputLocation": "."
+  "$schema": "https://github.com/Kellyleigh/KellysKitchenWebApp/blob/main/swa-cli.config.json",
+  "data-source": {
+    "database-type": "mssql",
+    "options": {
+      "set-session-context": false 
+    },
+    "connection-string": "@env('Server=tcp:kellysserver.database.windows.net,1433;Initial Catalog=KellysDatabase;Persist Security Info=False;User ID=kelly.fourie1@gmail.com;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Authentication=Active Directory Integrated;')"
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/rest"
+    },
+    "graphql": {
+      "allow-introspection": true,
+      "enabled": true,
+      "path": "/graphql"
+    },
+    "host": {
+      "mode": "production",
+      "cors": {
+        "origins": ["http://localhost:4280"],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      }
+    }
+  },
+  "entities": {
+    "Person": {
+      "source": "dbo.MyTestPersonTable",
+      "permissions": [
+        {
+          "actions": ["*"],
+          "role": "anonymous"
+        }
+      ]
     }
   }
 }
