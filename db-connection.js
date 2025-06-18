@@ -6,7 +6,7 @@ require('dotenv').config();
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'https://gentle-bay-0e08bd410.6.azurestaticapps.net',
   user: process.env.DB_USER || 'kelly.fourie1@gmail.com',
-  password: process.env.DB_PASSWORD || 'Kellyfourie1612!',
+  password: process.env.DB_PASSWORD || 'Kellyf!',
   database: process.env.DB_NAME || 'KellysKitchenDatabase',
   waitForConnections: true,
   connectionLimit: 10,
