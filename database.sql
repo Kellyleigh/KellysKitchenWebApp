@@ -1,8 +1,8 @@
 -- Kelly's Kitchen Restaurant Database Schema
 
 -- Create the database
-CREATE DATABASE KellysDatabase;
-USE KellysDatabase;
+CREATE DATABASE kellysdatabase;
+USE kellysdatabase;
 
 -- Menu Categories Table
 CREATE TABLE menu_categories (
