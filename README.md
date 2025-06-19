@@ -1,46 +1,86 @@
-# Kelly's Kitchen Restaurant Web App
+# Kelly's Kitchen Web App
 
-A restaurant website for Kelly's Kitchen with menu display, table booking, reviews, and contact functionality.
+A restaurant website with booking, reviews, and contact functionality.
 
-## Installation
+## Setup Instructions
 
-1. Install dependencies:
+### Prerequisites
+- Node.js (v14 or higher)
+- MySQL (v8.0 recommended)
+
+### Database Setup
+1. Install MySQL on your local machine if not already installed
+2. Create a database named `KellysDatabase`
+3. Import the schema from `database.sql`
+
+You can use the provided batch script on Windows:
+```
+setup-local-db.bat
+```
+
+Or manually with MySQL command line:
+```
+mysql -u root -p
+CREATE DATABASE KellysDatabase;
+USE KellysDatabase;
+source database.sql;
+```
+
+### Environment Configuration
+1. Copy `.env.example` to `.env`
+2. Update the database credentials in `.env`:
    ```
-   npm install
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=your_mysql_password
+   DB_NAME=KellysDatabase
    ```
-
-2. Start the server:
+3. Set `DEV_MODE=false` to use the real database
+4. Add your Gmail credentials for email functionality:
    ```
-   npm start
+   EMAIL_USER=your_email@gmail.com
+   EMAIL_PASS=your_app_password
    ```
-   
-   For development with auto-reload:
-   ```
-   npm run dev
-   ```
+   Note: For Gmail, you need to use an App Password, not your regular password
 
-3. Access the website at http://
+### Installation
+```
+npm install
+```
 
-## Database Structure
+### Running the Application
+```
+npm start
+```
 
-The database includes the following tables:
+For development with auto-reload:
+```
+npm run dev
+```
 
-- `menu_categories`: Categories of menu items (Breakfast, Main, Dessert, etc.)
-- `menu_items`: Individual menu items with prices and descriptions
-- `users`: Customer information
-- `bookings`: Table reservations
-- `reviews`: Customer reviews and ratings
-- `newsletter_subscribers`: Email subscribers for the newsletter
-- `contact_messages`: Messages from the contact form
-- `promotions`: Special offers and promotions
-- `staff`: Admin users for the restaurant management
+## Deployment Instructions
 
-## API Endpoints
+### For Azure Static Web Apps
+1. Update the `.env` file with your Azure MySQL database credentials
+2. Deploy using Azure Static Web Apps CLI or GitHub Actions
 
-- `/api/menu`: Get all menu items
-- `/api/featured-items`: Get featured menu items
-- `/api/reviews`: Get approved customer reviews
-- `/book-table`: Submit a table booking
-- `/submit-review`: Submit a customer review
-- `/subscribe`: Subscribe to the newsletter
-- `/send-message`: Send a contact message
+### For other hosting providers
+1. Ensure Node.js is available on your hosting environment
+2. Set up a MySQL database
+3. Update the `.env` file with your database credentials
+4. Deploy the application files
+5. Run `npm install` and `npm start` on your server
+
+## Troubleshooting
+
+### Database Connection Issues
+- Verify your MySQL service is running
+- Check that the credentials in `.env` are correct
+- Ensure your database exists and has the correct schema
+
+### Email Sending Issues
+- For Gmail, make sure you're using an App Password
+- Verify your email credentials in `.env`
+
+### Development Mode
+If you're having trouble with the database connection, you can set `DEV_MODE=true` in your `.env` file to use mock data for development.

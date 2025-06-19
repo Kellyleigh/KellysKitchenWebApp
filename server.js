@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Import database connection
-const { pool, testConnection } = require('./db-connection');
+const { pool, testConnection, isMockDatabase } = require('./db-connection');
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -57,11 +57,13 @@ app.post('/subscribe', async (req, res) => {
       `
     });
 
-    // Store subscriber in database
-    await pool.query(
-      'INSERT INTO newsletter_subscribers (email) VALUES (?)',
-      [email]
-    );
+    // Store subscriber in database if available
+    if (!isMockDatabase()) {
+      await pool.query(
+        'INSERT INTO newsletter_subscribers (email) VALUES (?)',
+        [email]
+      );
+    }
 
     res.status(200).json({ success: true, message: 'Subscription successful!' });
   } catch (error) {
@@ -127,11 +129,13 @@ app.post('/book-table', async (req, res) => {
       `
     });
 
-    // Store booking in database
-    await pool.query(
-      'INSERT INTO bookings (name, email, phone, booking_date, booking_time, party_size, seating_preference) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [name, email, phone, date, time, partySize, seatingPreference]
-    );
+    // Store booking in database if available
+    if (!isMockDatabase()) {
+      await pool.query(
+        'INSERT INTO bookings (name, email, phone, booking_date, booking_time, party_size, seating_preference) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [name, email, phone, date, time, partySize, seatingPreference]
+      );
+    }
     
     res.status(200).json({ 
       success: true, 
@@ -194,11 +198,13 @@ app.post('/submit-review', async (req, res) => {
       `
     });
 
-    // Store review in database
-    await pool.query(
-      'INSERT INTO reviews (name, surname, email, phone, rating, review_text) VALUES (?, ?, ?, ?, ?, ?)',
-      [name, surname, email, phone, rating, review]
-    );
+    // Store review in database if available
+    if (!isMockDatabase()) {
+      await pool.query(
+        'INSERT INTO reviews (name, surname, email, phone, rating, review_text) VALUES (?, ?, ?, ?, ?, ?)',
+        [name, surname, email, phone, rating, review]
+      );
+    }
     
     res.status(200).json({ 
       success: true, 
@@ -257,17 +263,18 @@ app.post('/send-message', async (req, res) => {
           <p><strong>Name:</strong> ${name} ${surname}</p>
           <p><strong>Email:</strong> ${email}</p>
           ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
+          <p><strong>Message:</strong> "${message}"</p>
         </div>
       `
     });
 
-    // Store message in database
-    await pool.query(
-      'INSERT INTO contact_messages (name, surname, email, phone, message) VALUES (?, ?, ?, ?, ?)',
-      [name, surname, email, phone, message]
-    );
+    // Store message in database if available
+    if (!isMockDatabase()) {
+      await pool.query(
+        'INSERT INTO contact_messages (name, surname, email, phone, message) VALUES (?, ?, ?, ?, ?)',
+        [name, surname, email, phone, message]
+      );
+    }
     
     res.status(200).json({ 
       success: true, 
@@ -282,9 +289,52 @@ app.post('/send-message', async (req, res) => {
   }
 });
 
-// API endpoint to get menu items
+// Test database connection on startup
+app.listen(PORT, async () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Database host: ${process.env.DB_HOST}`);
+  console.log(`Development mode: ${process.env.DEV_MODE === 'true' ? 'ON' : 'OFF'}`);
+  
+  // Test database connection
+  const dbConnected = await testConnection();
+  if (dbConnected) {
+    console.log('Database connection successful');
+  } else {
+    if (process.env.DEV_MODE === 'true') {
+      console.log('Running in local development mode with mock database');
+    } else {
+      console.log('WARNING: Failed to connect to database. Check your database settings in .env file.');
+      console.log('To use mock data for development, set DEV_MODE=true in your .env file.');
+    }
+  }
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  const dbStatus = isMockDatabase() ? 'mock' : 'connected';
+  res.status(200).json({ 
+    status: 'OK', 
+    message: 'Server is running', 
+    database: dbStatus 
+  });
+});
+
+// Get menu items endpoint
 app.get('/api/menu', async (req, res) => {
   try {
+    if (isMockDatabase()) {
+      // Return mock data for local development
+      return res.status(200).json({ 
+        success: true, 
+        data: [
+          { item_id: 1, name: 'Eggs Benedict', price: 85.00, category_name: 'Breakfast' },
+          { item_id: 2, name: 'French Toast', price: 75.00, category_name: 'Breakfast' },
+          { item_id: 3, name: 'Gourmet Burger', price: 120.00, category_name: 'Main' }
+        ],
+        mock: true
+      });
+    }
+    
     const [rows] = await pool.query(`
       SELECT m.*, c.name as category_name 
       FROM menu_items m
@@ -293,48 +343,93 @@ app.get('/api/menu', async (req, res) => {
       ORDER BY c.display_order, m.name
     `);
     
-    res.json({ success: true, menu: rows });
+    res.status(200).json({ success: true, data: rows });
   } catch (error) {
     console.error('Error fetching menu:', error);
     res.status(500).json({ success: false, message: 'Failed to fetch menu items' });
   }
 });
 
-// API endpoint to get featured menu items
-app.get('/api/featured-items', async (req, res) => {
+// Get featured menu items endpoint
+app.get('/api/featured-menu', async (req, res) => {
   try {
+    if (isMockDatabase()) {
+      // Return mock data for local development
+      return res.status(200).json({ 
+        success: true, 
+        data: [
+          { item_id: 2, name: 'French Toast', price: 75.00, category_name: 'Breakfast', is_featured: true },
+          { item_id: 3, name: 'Gourmet Burger', price: 120.00, category_name: 'Main', is_featured: true }
+        ],
+        mock: true
+      });
+    }
+    
     const [rows] = await pool.query(`
-      SELECT * FROM menu_items 
-      WHERE is_featured = TRUE AND is_active = TRUE
-      LIMIT 6
+      SELECT m.*, c.name as category_name 
+      FROM menu_items m
+      JOIN menu_categories c ON m.category_id = c.category_id
+      WHERE m.is_featured = TRUE AND m.is_active = TRUE
+      ORDER BY c.display_order, m.name
     `);
     
-    res.json({ success: true, featuredItems: rows });
+    res.status(200).json({ success: true, data: rows });
   } catch (error) {
-    console.error('Error fetching featured items:', error);
-    res.status(500).json({ success: false, message: 'Failed to fetch featured items' });
+    console.error('Error fetching featured menu:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch featured menu items' });
   }
 });
 
-// API endpoint to get approved reviews
+// Get approved reviews endpoint
 app.get('/api/reviews', async (req, res) => {
   try {
+    if (isMockDatabase()) {
+      // Return mock data for local development
+      return res.status(200).json({ 
+        success: true, 
+        data: [
+          { 
+            review_id: 1, 
+            name: 'Sarah', 
+            surname: 'Johnson', 
+            rating: 5, 
+            review_text: 'Amazing food and atmosphere! The milkshakes are absolutely divine.',
+            created_at: new Date().toISOString()
+          },
+          { 
+            review_id: 2, 
+            name: 'Michael', 
+            surname: 'Smith', 
+            rating: 5, 
+            review_text: 'Best restaurant in Kempton Park! The service is exceptional.',
+            created_at: new Date().toISOString()
+          }
+        ],
+        mock: true
+      });
+    }
+    
     const [rows] = await pool.query(`
-      SELECT * FROM reviews 
+      SELECT * FROM reviews
       WHERE is_approved = TRUE
       ORDER BY created_at DESC
       LIMIT 10
     `);
     
-    res.json({ success: true, reviews: rows });
+    res.status(200).json({ success: true, data: rows });
   } catch (error) {
     console.error('Error fetching reviews:', error);
     res.status(500).json({ success: false, message: 'Failed to fetch reviews' });
   }
 });
 
-// Test database connection when server starts
-app.listen(PORT, async () => {
-  console.log(`Server running on port ${PORT}`);
-  await testConnection();
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).json({ 
+    success: false, 
+    message: 'An unexpected error occurred on the server' 
+  });
 });
+
+module.exports = app; // Export for testing purposes

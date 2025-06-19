@@ -9,6 +9,35 @@
     font-weight: 600;
 }
 
+/* Ensure minimum touch target size for mobile */
+button, input[type="submit"], .btn, a {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive text scaling */
+html {
+    font-size: 16px;
+}
+
+@media only screen and (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    html {
+        font-size: 14px;
+    }
+}
+
 /* Carousel custom styling */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
@@ -29,6 +58,26 @@
 .carousel-item.active {
     opacity: 1;
     position: relative;
+}
+
+/* Responsive carousel */
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+@media only screen and (max-width: 768px) {
+    .carousel-item img {
+        max-height: 300px;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .carousel-item img {
+        max-height: 250px;
+    }
 }
 
 body {
@@ -663,6 +712,69 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.review-options {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.review-platforms {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.platform-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.platform-buttons button {
+    flex: 1;
+    min-width: 200px;
+    padding: 15px 20px;
+    background-color: rgb(255, 219, 233);
+    border: 1px solid rgb(255, 138, 183);
+    border-radius: 4px;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.platform-buttons button:hover {
+    background-color: rgb(255, 138, 183);
+}
+
+.or-divider {
+    text-align: center;
+    margin: 30px 0;
+    position: relative;
+}
+
+.or-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: rgb(255, 138, 183);
+}
+
+.or-divider span {
+    background-color: white;
+    padding: 0 20px;
+    color: rgb(255, 138, 183);
+    font-weight: bold;
+}
+
 .review-form {
     background: white;
     padding: 30px;
@@ -899,11 +1011,81 @@ footer a:hover {
     }
 }
 
+/* Tablet styles (768px - 1024px) */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .header {
+        padding: 0 4vw;
+    }
+    
+    .home {
+        padding: 0 4vw;
+    }
+    
+    .menu-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 0 15px;
+    }
+    
+    .menu-item img {
+        height: 280px;
+    }
+    
+    .featured-reviews {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .review-card {
+        max-width: 100%;
+    }
+    
+    .dish-gallery {
+        gap: 15px;
+    }
+    
+    .dish-gallery img {
+        width: 250px;
+    }
+    
+    .filter-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .team-section {
+        gap: 20px;
+    }
+    
+    .team-member {
+        flex: 1 1 100%;
+    }
+    
+    .contact-container {
+        gap: 30px;
+    }
+    
+    .button-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* Mobile styles (up to 768px) */
 @media only screen and (max-width: 768px) {
 
     .header .nav,
     .header .account {
         display: none;
+    }
+
+    .header {
+        padding: 0 4vw;
+        height: 90px;
+    }
+    
+    .header h1 {
+        font-size: 32px !important;
     }
 
     .search {
@@ -966,6 +1148,10 @@ footer a:hover {
         box-shadow: 0 2px 15px rgb(255, 138, 183);
         font-size: 15px;
         margin-top: 5px;
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .headerbar .account {
@@ -978,75 +1164,301 @@ footer a:hover {
     .headerbar .account ul {
         justify-content: space-between;
     }
+    
+    .home {
+        padding: 0 3vw;
+    }
 
     .main_slide div:nth-child(2) img {
         width: 90vw;
         margin-bottom: 20px;
-
+    }
+    
+    .section-heading {
+        font-size: 24px;
+        padding-top: 30px;
+    }
+    
+    .heading-description {
+        font-size: 18px;
+        padding: 0 10px;
     }
 
     .menu-grid-container {
         grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 10px;
+    }
+    
+    .menu-item img {
+        height: 250px;
+    }
+    
+    .menu-item h3 {
+        font-size: 22px;
+    }
+    
+    .menu-item p {
+        font-size: 18px;
+    }
+    
+    .menu-item .price {
+        font-size: 22px;
+    }
+    
+    .filter-container {
+        flex-direction: column;
+        gap: 15px;
+        margin: 20px auto 0;
+        padding: 15px;
     }
 
     .dish-gallery {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
+    }
+    
+    .dish-gallery img {
+        width: 90%;
+        max-width: 300px;
+    }
+    
+    .featured-reviews {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .review-card {
+        min-width: auto;
+        margin: 0 10px;
+    }
+    
+    .button-container {
+        flex-direction: column;
+        gap: 15px;
+        margin: 30px 10px;
+    }
+
+    .about-container {
+        padding: 0 15px;
     }
 
     .about-container .row {
         flex-direction: column;
+        gap: 20px;
     }
 
     .about-img,
     .about-description {
         flex: none;
         width: 100%;
-        margin-left: 20px;
+    }
+    
+    .about-description {
+        padding: 10px;
+    }
+    
+    .team-section {
+        gap: 20px;
+    }
+    
+    .team-member {
+        flex: 1 1 100%;
+        min-width: auto;
     }
 
     .booking-form {
-        margin-left: 80px;
+        margin: 20px 15px;
+        padding: 15px;
     }
 
     .contact-container {
         flex-direction: column;
+        gap: 20px;
+        padding: 0 15px;
     }
 
     .contact-form,
     .contact-info {
         width: 100%;
     }
+    
+    .contact-form {
+        padding: 20px;
+    }
+    
+    .info-details {
+        padding: 20px;
+    }
+    
+    .review-container {
+        padding: 0 15px;
+    }
+    
+    .review-form {
+        padding: 20px;
+    }
+    
+    .platform-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .platform-buttons button {
+        font-size: 16px;
+        padding: 15px;
+    }
 }
 
+/* Small mobile styles (up to 550px) */
 @media only screen and (max-width: 550px) {
+    .header {
+        height: 80px;
+        padding: 0 3vw;
+    }
+    
+    .header h1 {
+        font-size: 28px !important;
+    }
+    
+    .home {
+        padding: 0 2vw;
+    }
+
     .main_slide div:nth-child(1) {
+        font-size: 18px;
+        padding-top: 20px;
+    }
+    
+    .section-heading {
         font-size: 20px;
+        padding-top: 25px;
+    }
+    
+    .heading-description {
+        font-size: 16px;
     }
 
     .txt_btn {
-        margin-top: 20px;
-        width: 80px;
-        line-height: 50px;
-        font-size: 40px;
+        font-size: 32px;
     }
 
     .main_slide div:nth-child(2) img {
-        width: 90vw;
-        margin-bottom: 20px;
+        width: 95vw;
+        margin-bottom: 15px;
     }
 
     .main_slide div:nth-child(3) {
+        font-size: 18px;
+    }
+    
+    .menu-grid-container {
+        padding: 0 5px;
+        gap: 15px;
+    }
+    
+    .menu-item {
+        margin: 0 5px;
+    }
+    
+    .menu-item img {
+        height: 200px;
+    }
+    
+    .menu-item h3 {
         font-size: 20px;
+        margin: 10px 10px 5px;
+    }
+    
+    .menu-item p {
+        font-size: 16px;
+        margin: 0 10px;
+    }
+    
+    .menu-item .price {
+        font-size: 20px;
+        margin: 10px;
+    }
+    
+    .filter-container {
+        margin: 15px auto 0;
+        padding: 10px;
+    }
+    
+    .dish-gallery img {
+        width: 95%;
+        max-width: 280px;
+    }
+    
+    .review-card {
+        margin: 0 5px;
+        padding: 15px;
+    }
+    
+    .reviewer-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .button-container {
+        margin: 20px 5px;
+    }
+
+    .about-container {
+        padding: 0 10px;
     }
 
     .about-img,
     .about-description {
-        margin-left: 20px;
+        width: 100%;
+    }
+    
+    .about-description {
+        padding: 5px;
+    }
+    
+    .team-member {
+        padding: 15px;
     }
 
     .booking-form {
-        margin-left: 20px;
+        margin: 15px 10px;
+        padding: 15px;
+    }
+    
+    .contact-container {
+        padding: 0 10px;
+    }
+    
+    .contact-form,
+    .info-details {
+        padding: 15px;
+    }
+    
+    .review-container {
+        padding: 0 10px;
+    }
+    
+    .review-form {
+        padding: 15px;
+    }
+    
+    .star-rating label i {
+        font-size: 22px;
+    }
+    
+    .platform-buttons button {
+        font-size: 14px;
+        padding: 12px;
+    }
+    
+    footer .content {
+        padding: 15px;
+    }
+    
+    footer .content .box {
+        margin-top: 20px;
     }
 }
 
