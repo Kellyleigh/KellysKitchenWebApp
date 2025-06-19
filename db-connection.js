@@ -1,5 +1,5 @@
 // Database connection module for Kelly's Kitchen
-const mysql = require('mysql2/promise');
+const sql = require('mssql');
 require('dotenv').config();
 
 // Check if we're in development mode
@@ -9,31 +9,36 @@ const devMode = process.env.DEV_MODE === 'true';
 const createMockPool = () => {
   console.log('Using mock database for local development');
   return {
-    query: async (sql, params) => {
-      console.log('MOCK DB QUERY:', sql, params);
+    query: async (query, params) => {
+      console.log('MOCK DB QUERY:', query, params);
       return [[], {}]; // Return empty result set
     },
-    getConnection: async () => {
-      return {
-        release: () => {}
-      };
-    }
+    request: () => ({
+      input: () => ({}),
+      query: async () => ({ recordset: [] })
+    })
   };
 };
 
-// Create a connection pool if not in dev mode
+// Create Azure SQL connection pool
 const createRealPool = () => {
   try {
-    return mysql.createPool({
-      host: process.env.DB_HOST,
+    const config = {
+      server: process.env.DB_HOST,
+      database: process.env.DB_NAME,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0,
-      connectTimeout: 10000 // 10 second timeout
-    });
+      options: {
+        encrypt: true,
+        trustServerCertificate: false
+      },
+      pool: {
+        max: 10,
+        min: 0,
+        idleTimeoutMillis: 30000
+      }
+    };
+    return new sql.ConnectionPool(config);
   } catch (error) {
     console.error('Error creating database pool:', error);
     return null;
