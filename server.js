@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Import database connection
-const { pool, testConnection, isMockDatabase } = require('./db-connection');
+const { query, initializeDatabase } = require('./db-sqlite');
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -57,13 +57,8 @@ app.post('/subscribe', async (req, res) => {
       `
     });
 
-    // Store subscriber in database if available
-    if (!isMockDatabase()) {
-      await pool.query(
-        'INSERT INTO newsletter_subscribers (email) VALUES (?)',
-        [email]
-      );
-    }
+    // Store subscriber in database
+    await query('INSERT INTO newsletter_subscribers (email) VALUES (?)', [email]);
 
     res.status(200).json({ success: true, message: 'Subscription successful!' });
   } catch (error) {
@@ -129,13 +124,11 @@ app.post('/book-table', async (req, res) => {
       `
     });
 
-    // Store booking in database if available
-    if (!isMockDatabase()) {
-      await pool.query(
-        'INSERT INTO bookings (name, email, phone, booking_date, booking_time, party_size, seating_preference) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [name, email, phone, date, time, partySize, seatingPreference]
-      );
-    }
+    // Store booking in database
+    await query(
+      'INSERT INTO bookings (name, email, phone, booking_date, booking_time, party_size, seating_preference) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [name, email, phone, date, time, partySize, seatingPreference]
+    );
     
     res.status(200).json({ 
       success: true, 
@@ -198,13 +191,11 @@ app.post('/submit-review', async (req, res) => {
       `
     });
 
-    // Store review in database if available
-    if (!isMockDatabase()) {
-      await pool.query(
-        'INSERT INTO reviews (name, surname, email, phone, rating, review_text) VALUES (?, ?, ?, ?, ?, ?)',
-        [name, surname, email, phone, rating, review]
-      );
-    }
+    // Store review in database
+    await query(
+      'INSERT INTO reviews (name, surname, email, phone, rating, review_text) VALUES (?, ?, ?, ?, ?, ?)',
+      [name, surname, email, phone, rating, review]
+    );
     
     res.status(200).json({ 
       success: true, 
@@ -268,13 +259,11 @@ app.post('/send-message', async (req, res) => {
       `
     });
 
-    // Store message in database if available
-    if (!isMockDatabase()) {
-      await pool.query(
-        'INSERT INTO contact_messages (name, surname, email, phone, message) VALUES (?, ?, ?, ?, ?)',
-        [name, surname, email, phone, message]
-      );
-    }
+    // Store message in database
+    await query(
+      'INSERT INTO contact_messages (name, surname, email, phone, message) VALUES (?, ?, ?, ?, ?)',
+      [name, surname, email, phone, message]
+    );
     
     res.status(200).json({ 
       success: true, 
@@ -289,23 +278,15 @@ app.post('/send-message', async (req, res) => {
   }
 });
 
-// Test database connection on startup
+// Initialize database and start server
 app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Database host: ${process.env.DB_HOST}`);
-  console.log(`Development mode: ${process.env.DEV_MODE === 'true' ? 'ON' : 'OFF'}`);
   
-  // Test database connection
-  const dbConnected = await testConnection();
-  if (dbConnected) {
-    console.log('Database connection successful');
-  } else {
-    if (process.env.DEV_MODE === 'true') {
-      console.log('Running in local development mode with mock database');
-    } else {
-      console.log('WARNING: Failed to connect to database. Check your database settings in .env file.');
-      console.log('To use mock data for development, set DEV_MODE=true in your .env file.');
-    }
+  try {
+    await initializeDatabase();
+    console.log('SQLite database initialized successfully');
+  } catch (error) {
+    console.error('Database initialization failed:', error);
   }
 });
 
@@ -322,24 +303,11 @@ app.get('/health', (req, res) => {
 // Get menu items endpoint
 app.get('/api/menu', async (req, res) => {
   try {
-    if (isMockDatabase()) {
-      // Return mock data for local development
-      return res.status(200).json({ 
-        success: true, 
-        data: [
-          { item_id: 1, name: 'Eggs Benedict', price: 85.00, category_name: 'Breakfast' },
-          { item_id: 2, name: 'French Toast', price: 75.00, category_name: 'Breakfast' },
-          { item_id: 3, name: 'Gourmet Burger', price: 120.00, category_name: 'Main' }
-        ],
-        mock: true
-      });
-    }
-    
-    const [rows] = await pool.query(`
+    const [rows] = await query(`
       SELECT m.*, c.name as category_name 
       FROM menu_items m
       JOIN menu_categories c ON m.category_id = c.category_id
-      WHERE m.is_active = TRUE
+      WHERE m.is_active = 1
       ORDER BY c.display_order, m.name
     `);
     
