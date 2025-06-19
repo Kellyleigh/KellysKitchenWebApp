@@ -2,43 +2,6 @@
 
 A restaurant website for Kelly's Kitchen with menu display, table booking, reviews, and contact functionality.
 
-## Database Setup
-
-The application uses MySQL for data storage. Follow these steps to set up the database:
-
-1. Install MySQL Server if you haven't already
-2. Create a new database:
-   ```sql
-   CREATE DATABASE kellys_kitchen;
-   ```
-3. Run the database schema script:
-   ```
-   mysql -u your_username -p kellys_kitchen < database.sql
-   ```
-   Or you can copy and paste the contents of database.sql into your MySQL client.
-
-## Environment Configuration
-
-1. Copy the `.env.example` file to `.env`:
-   ```
-   cp .env.example .env
-   ```
-2. Edit the `.env` file with your database credentials and email settings:
-   ```
-   # Server Configuration
-   PORT=3000
-
-   # Database Configuration
-   DB_HOST=localhost
-   DB_USER=your_mysql_username
-   DB_PASSWORD=your_mysql_password
-   DB_NAME=kellys_kitchen
-
-   # Email Configuration
-   EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_app_password_here
-   ```
-
 ## Installation
 
 1. Install dependencies:
@@ -56,7 +19,7 @@ The application uses MySQL for data storage. Follow these steps to set up the da
    npm run dev
    ```
 
-3. Access the website at http://localhost:3000
+3. Access the website at http://
 
 ## Database Structure
 
