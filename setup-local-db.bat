@@ -7,10 +7,10 @@ set MYSQL_USER=root
 set MYSQL_PASSWORD=
 
 echo Creating database...
-%MYSQL_PATH%\mysql -u %MYSQL_USER% --execute="CREATE DATABASE IF NOT EXISTS KellysDatabase;"
+%MYSQL_PATH%\mysql -u %MYSQL_USER% --execute="CREATE DATABASE IF NOT EXISTS kellysdatabase;"
 
 echo Importing schema...
-%MYSQL_PATH%\mysql -u %MYSQL_USER% KellysDatabase < database.sql
+%MYSQL_PATH%\mysql -u %MYSQL_USER% kellysdatabase < database.sql
 
 echo Database setup complete!
 pause
