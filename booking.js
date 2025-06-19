@@ -84,23 +84,32 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             try {
-                const response = await fetch('/book-table', {
+                const response = await fetch('/rest/Bookings', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify({
+                        name: formData.name,
+                        email: formData.email,
+                        phone: formData.phone,
+                        booking_date: formData.date,
+                        booking_time: formData.time,
+                        party_size: parseInt(formData.partySize),
+                        seating_preference: formData.seatingPreference,
+                        status: 'pending'
+                    })
                 });
                 
                 const result = await response.json();
                 
-                if (result.success) {
+                if (response.ok) {
                     // Show success message
                     document.getElementById('booking-response').innerHTML = 
                         `<div class="alert alert-success">
                             <h4>Booking Confirmed!</h4>
                             <p>Thank you ${formData.name}! Your table for ${formData.partySize} has been reserved for ${formData.date} at ${formData.time}.</p>
-                            <p>A confirmation email has been sent to ${formData.email}.</p>
+                            <p>We will contact you shortly to confirm your reservation.</p>
                         </div>`;
                     
                     // Clear the form

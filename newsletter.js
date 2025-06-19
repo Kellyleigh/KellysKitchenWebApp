@@ -22,17 +22,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             try {
-                const response = await fetch('/subscribe', {
+                const response = await fetch('/rest/NewsletterSubscribers', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({ 
+                        email: email,
+                        is_active: true
+                    })
                 });
                 
-                const result = await response.json();
-                
-                if (result.success) {
+                if (response.ok) {
                     // Clear the input field
                     emailInput.value = '';
                     
@@ -51,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         successMessage.remove();
                     }, 5000);
                 } else {
+                    const result = await response.json();
                     alert(result.message || 'Subscription failed. Please try again.');
                 }
             } catch (error) {

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Test - Kelly's Kitchen</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .success { color: green; }
+        .error { color: red; }
+        button { padding: 10px 15px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Kelly's Kitchen Database Test</h1>
+    
+    <div class="test-section">
+        <h2>Menu Items Test</h2>
+        <button onclick="testMenuItems()">Test Menu Items</button>
+        <div id="menu-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Booking Test</h2>
+        <button onclick="testBooking()">Test Booking Creation</button>
+        <div id="booking-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Review Test</h2>
+        <button onclick="testReview()">Test Review Creation</button>
+        <div id="review-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Newsletter Test</h2>
+        <button onclick="testNewsletter()">Test Newsletter Subscription</button>
+        <div id="newsletter-result"></div>
+    </div>
+
+    <script>
+        async function testMenuItems() {
+            const resultDiv = document.getElementById('menu-result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('/rest/MenuItems');
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `<div class="success">✓ Menu items loaded successfully! Found ${data.value ? data.value.length : data.length} items.</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">✗ Failed to load menu items. Status: ${response.status}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testBooking() {
+            const resultDiv = document.getElementById('booking-result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const testBooking = {
+                    name: 'Test User',
+                    email: 'test@example.com',
+                    phone: '0123456789',
+                    booking_date: '2025-02-15',
+                    booking_time: '19:00',
+                    party_size: 2,
+                    seating_preference: 'inside',
+                    status: 'pending'
+                };
+                
+                const response = await fetch('/rest/Bookings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testBooking)
+                });
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div class="success">✓ Booking created successfully!</div>`;
+                } else {
+                    const error = await response.text();
+                    resultDiv.innerHTML = `<div class="error">✗ Failed to create booking. Status: ${response.status}<br>${error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testReview() {
+            const resultDiv = document.getElementById('review-result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const testReview = {
+                    name: 'Test',
+                    surname: 'User',
+                    email: 'test@example.com',
+                    phone: '0123456789',
+                    rating: 5,
+                    review_text: 'Great test review!',
+                    is_approved: false
+                };
+                
+                const response = await fetch('/rest/Reviews', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testReview)
+                });
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div class="success">✓ Review created successfully!</div>`;
+                } else {
+                    const error = await response.text();
+                    resultDiv.innerHTML = `<div class="error">✗ Failed to create review. Status: ${response.status}<br>${error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testNewsletter() {
+            const resultDiv = document.getElementById('newsletter-result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const testSubscription = {
+                    email: 'test@example.com',
+                    is_active: true
+                };
+                
+                const response = await fetch('/rest/NewsletterSubscribers', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testSubscription)
+                });
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div class="success">✓ Newsletter subscription created successfully!</div>`;
+                } else {
+                    const error = await response.text();
+                    resultDiv.innerHTML = `<div class="error">✗ Failed to create subscription. Status: ${response.status}<br>${error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

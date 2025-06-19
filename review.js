@@ -25,17 +25,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             try {
-                const response = await fetch('/submit-review', {
+                const response = await fetch('/rest/Reviews', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify({
+                        name: formData.name,
+                        surname: formData.surname,
+                        email: formData.email,
+                        phone: formData.phone,
+                        rating: parseInt(formData.rating),
+                        review_text: formData.review,
+                        is_approved: false
+                    })
                 });
                 
-                const result = await response.json();
-                
-                if (result.success) {
+                if (response.ok) {
                     // Show success message
                     document.getElementById('review-response').innerHTML = 
                         `<div class="alert alert-success">
@@ -46,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Clear the form
                     reviewForm.reset();
                 } else {
+                    const result = await response.json();
                     document.getElementById('review-response').innerHTML = 
                         `<div class="alert alert-danger">
                             <h4>Submission Failed</h4>

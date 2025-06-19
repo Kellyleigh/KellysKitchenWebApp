@@ -1,6 +1,6 @@
 
 {
-  "$schema": "https://github.com/Kellyleigh/KellysKitchenWebApp/blob/main/swa-cli.config.json",
+  "$schema": "https://aka.ms/swa/config-schema",
   "data-source": {
     "database-type": "mysql",
     "connection-string": "@env('DATABASE_CONNECTION_STRING')"
@@ -18,7 +18,7 @@
     "host": {
       "mode": "production",
       "cors": {
-        "origins": ["http://localhost:4280"],
+        "origins": ["http://localhost:4280", "https://kellyskitchen-gmgsh5eqaqf9gyg3.southafricanorth-01.azurewebsites.net"],
         "allow-credentials": false
       },
       "authentication": {
@@ -27,11 +27,38 @@
     }
   },
   "entities": {
-    "Person": {
-      "source": "dbo.MyTestPersonTable",
+    "MenuItems": {
+      "source": "menu_items",
       "permissions": [
         {
-          "actions": ["*"],
+          "actions": ["read"],
+          "role": "anonymous"
+        }
+      ]
+    },
+    "Bookings": {
+      "source": "bookings",
+      "permissions": [
+        {
+          "actions": ["create"],
+          "role": "anonymous"
+        }
+      ]
+    },
+    "Reviews": {
+      "source": "reviews",
+      "permissions": [
+        {
+          "actions": ["create", "read"],
+          "role": "anonymous"
+        }
+      ]
+    },
+    "NewsletterSubscribers": {
+      "source": "newsletter_subscribers",
+      "permissions": [
+        {
+          "actions": ["create"],
           "role": "anonymous"
         }
       ]
